@@ -1,13 +1,21 @@
-import React, {Component} from 'react'
-import {View, TextInput, Text} from "react-native";
+import React from 'react'
+import {View} from "react-native";
+import {Input, Item} from "native-base";
+import ErrorMessage from "../../atoms/ErrorMessage";
 
 const TextField = props => (
 	<View>
-		<TextInput/>
-		props.error ? <Text>{props.error}</Text> : null
+		<Item>
+			<Input
+				placeholder={props.title}
+				onChangeText={props.onChangeText}
+				secureTextEntry={props.isPassowrd}
+			/>
+		</Item>
+		{props.error !== "" &&
+			<ErrorMessage text={props.error}/>
+		}
 	</View>
 )
-
-
 
 export default TextField
