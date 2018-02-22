@@ -13,7 +13,7 @@ const HeaderButton = (props) => (
 
 const styles = StyleSheet.create({
 	buttonContainer: {
-		paddingHorizontal: 10,
+		paddingHorizontal: 20,
 	}
 })
 
