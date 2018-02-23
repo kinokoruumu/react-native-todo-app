@@ -110,6 +110,7 @@ export default class Tasks extends Component {
 		this.setState({scrollEnabled: state})
 	}
 	render() {
+		console.log(this.props.type)
 		const renderItems = tasks.map((task) => (
 			<Task
 				key={task.task_id}
@@ -117,6 +118,7 @@ export default class Tasks extends Component {
 				removeTask={(taskId) => this.removeTask(taskId)}
 				setScrollEnabled={(state) => this.setScrollEnabled(state)}
 				scrollEnabled={this.state.scrollEnabled}
+				type={this.props.type}
 			/>
 		))
 		return (

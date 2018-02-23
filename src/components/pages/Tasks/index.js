@@ -23,10 +23,10 @@ export default class TasksPage extends Component {
 		return (
 			<Tabs initialPage={0} locked>
 				<Tab heading="MY TASK">
-					<Tasks/>
+					<Tasks type="my"/>
 				</Tab>
 				<Tab heading="COMP TASK">
-					<Tasks/>
+					<Tasks type="comp"/>
 				</Tab>
 			</Tabs>
 		)
