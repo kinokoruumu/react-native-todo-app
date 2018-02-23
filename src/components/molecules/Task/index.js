@@ -25,7 +25,7 @@ export default class Task extends Component {
 	createPanResponder = () => {
 		this._panResponder = PanResponder.create({
 			onStartShouldSetPanResponder: (evt, gestureState) => true,
-			onMoveShouldSetPanResponder: (evt, gestureState) => Math.abs(gestureState.dx) > 5,
+			onMoveShouldSetPanResponder: (evt, gestureState) => true,
 
 			onPanResponderGrant: (e, gestureState) => {
 				this.state.pan.setOffset({x: this.state.pan.x._value, y: this.state.pan.y._value});
@@ -34,22 +34,28 @@ export default class Task extends Component {
 
 			onPanResponderMove: (e, gestureState) => {
 				const {dx} = gestureState
-				if (dx > 5) {
+				if (dx >= 0) {
 					this.state.pan.setValue({x: dx, y: 0})
-					if (this.props.scrollEnabled) this.props.setScrollEnabled(false)
+					// if (this.props.scrollEnabled) this.props.setScrollEnabled(false)
 				}
 			},
 
-			onPanResponderRelease: (e, {vx, vy}) => {
+			onPanResponderRelease: (e, {vx, vy, dx, dy}) => {
 				this.state.pan.flattenOffset();
-				// let velocity;
-				//
-				// if (vx >= 0) {
-				// 	velocity = clamp(vx, 3, 5);
-				// } else if (vx < 0) {
-				// 	velocity = clamp(vx * -1, 3, 5) * -1;
-				// }
-				this.props.setScrollEnabled(true)
+				let velocity;
+
+				if (vx >= 0) {
+					velocity = clamp(vx, 3, 5);
+				} else if (vx < 0) {
+					velocity = clamp(vx * -1, 3, 5) * -1;
+				}
+				// this.props.setScrollEnabled(true)
+
+				const moveX = Math.abs(dx) > Math.abs(dy);
+				if (this.props.scroll) {
+					if (moveX) this.props.scroll(false);
+					else this.props.scroll(true);
+				}
 
 				if (Math.abs(this.state.pan.x._value) > SWIPE_THRESHOLD) {
 					Animated.decay(this.state.pan, {
@@ -59,11 +65,14 @@ export default class Task extends Component {
 						this.props.removeTask(this.props.data.task_id)
 					})
 				} else {
-					Animated.spring(this.state.pan, {
+					Animated.timing(this.state.pan, {
 						toValue: {x: 0, y: 0},
+						duration: 200
 					}).start()
 				}
-			}
+			},
+			onShouldBlockNativeResponder: (event, gestureState) => false,
+			onPanResponderTerminationRequest: () => false,
 		});
 	};
 
@@ -72,6 +81,7 @@ export default class Task extends Component {
 	}
 
 	render() {
+		console.log(this.props.scroll)
 		const {task_id, subject_name, task_number, task_name, subject_instructor, submission_deadline} = this.props.data
 		return (
 			<Animated.View
