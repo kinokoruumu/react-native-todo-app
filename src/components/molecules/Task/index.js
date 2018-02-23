@@ -36,7 +36,6 @@ export default class Task extends Component {
 				const {dx} = gestureState
 				if (dx >= 0) {
 					this.state.pan.setValue({x: dx, y: 0})
-					// if (this.props.scrollEnabled) this.props.setScrollEnabled(false)
 				}
 			},
 
@@ -48,13 +47,6 @@ export default class Task extends Component {
 					velocity = clamp(vx, 3, 5);
 				} else if (vx < 0) {
 					velocity = clamp(vx * -1, 3, 5) * -1;
-				}
-				// this.props.setScrollEnabled(true)
-
-				const moveX = Math.abs(dx) > Math.abs(dy);
-				if (this.props.scroll) {
-					if (moveX) this.props.scroll(false);
-					else this.props.scroll(true);
 				}
 
 				if (Math.abs(this.state.pan.x._value) > SWIPE_THRESHOLD) {

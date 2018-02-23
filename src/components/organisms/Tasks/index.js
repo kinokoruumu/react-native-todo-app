@@ -99,15 +99,11 @@ export default class Tasks extends Component {
 		super(props)
 		this.state = {
 			removed: false,
-			scrollEnabled: true
 		}
 	}
 	removeTask(taskId) {
 		tasks = tasks.filter((task) => task.task_id !== taskId)
 		this.setState({removed: true})
-	}
-	setScrollEnabled(state) {
-		this.setState({scrollEnabled: state})
 	}
 	render() {
 		const renderItems = tasks.map((task) => (
@@ -115,14 +111,11 @@ export default class Tasks extends Component {
 				key={task.task_id}
 				data={task}
 				removeTask={(taskId) => this.removeTask(taskId)}
-				setScrollEnabled={(state) => this.setScrollEnabled(state)}
-				scrollEnabled={this.state.scrollEnabled}
 			/>
 		))
 		return (
 			<Content
 				style={styles.container}
-				scrollEnabled={this.state.scrollEnabled}
 			>
 				{renderItems}
 			</Content>
