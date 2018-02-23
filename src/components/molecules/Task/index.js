@@ -25,7 +25,7 @@ export default class Task extends Component {
 	createPanResponder = () => {
 		this._panResponder = PanResponder.create({
 			onStartShouldSetPanResponder: (evt, gestureState) => true,
-			onMoveShouldSetPanResponder: (evt, gestureState) => true,
+			onMoveShouldSetPanResponder: (evt, gestureState) => Math.abs(gestureState.dx) > 0,
 
 			onPanResponderGrant: (e, gestureState) => {
 				this.state.pan.setOffset({x: this.state.pan.x._value, y: this.state.pan.y._value});
