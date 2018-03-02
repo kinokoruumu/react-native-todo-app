@@ -33,9 +33,12 @@ export default class Task extends Component {
 			},
 
 			onPanResponderMove: (e, gestureState) => {
-				const {dx} = gestureState
+				let {dx} = gestureState
+				const moveDirection = (this.props.type === "my") ? 1 : -1
+				dx *= moveDirection
 				if (dx >= 0) {
-					this.state.pan.setValue({x: dx, y: 0})
+					this.state.pan.setValue({x: dx * moveDirection, y: 0})
+					// if (this.props.scrollEnabled) this.props.setScrollEnabled(false)
 				}
 			},
 
@@ -73,7 +76,6 @@ export default class Task extends Component {
 	}
 
 	render() {
-		console.log(this.props.scroll)
 		const {task_id, subject_name, task_number, task_name, subject_instructor, submission_deadline} = this.props.data
 		return (
 			<Animated.View

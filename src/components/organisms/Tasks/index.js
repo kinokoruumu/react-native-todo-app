@@ -106,11 +106,13 @@ export default class Tasks extends Component {
 		this.setState({removed: true})
 	}
 	render() {
+		console.log(this.props.type)
 		const renderItems = tasks.map((task) => (
 			<Task
 				key={task.task_id}
 				data={task}
 				removeTask={(taskId) => this.removeTask(taskId)}
+				type={this.props.type}
 			/>
 		))
 		return (
