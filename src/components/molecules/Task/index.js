@@ -51,13 +51,6 @@ export default class Task extends Component {
 				} else if (vx < 0) {
 					velocity = clamp(vx * -1, 3, 5) * -1;
 				}
-				// this.props.setScrollEnabled(true)
-
-				const moveX = Math.abs(dx) > Math.abs(dy);
-				if (this.props.scroll) {
-					if (moveX) this.props.scroll(false);
-					else this.props.scroll(true);
-				}
 
 				if (Math.abs(this.state.pan.x._value) > SWIPE_THRESHOLD) {
 					Animated.decay(this.state.pan, {
